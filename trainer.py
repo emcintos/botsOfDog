@@ -13,15 +13,21 @@ def get_tweets(twitter):
 chainmodel = {}
 
 
-def train_markov(tweet):
+def train_markov(tweet, engage):
     global chainmodel
 #     tweet.replace('.', '')
     tweet = tweet.lower().split()
     for i, word in enumerate(tweet):
         if i == len(tweet) - 1:
             chainmodel['END'] = chainmodel.get('END', []) + [word]
+            for f in range(engage):
+                chainmodel['END'] = chainmodel.get('END') + [word]
         else:
             if i == 0:
                 chainmodel['START'] = chainmodel.get('START', []) + [word]
+                for f in range(engage):
+                    chainmodel['START'] = chainmodel.get('START') + [word]
             chainmodel[word] = chainmodel.get(word, []) + [tweet[i+1]]
+            for f in range(engage):
+                chainmodel[word] = chainmodel.get(word) + [tweet[i+1]]
     return chainmodel

@@ -23,7 +23,7 @@ twitter = Twython(
 timeline = trainer.get_tweets(twitter)
 for tweet in timeline:
     if tweet['truncated'] is False and tweet['is_quote_status'] is False:
-        chain = trainer.train_markov(tweet['text'])
+        chain = trainer.train_markov(tweet['text'], ((tweet['favorite_count']//1000) + (tweet['retweet_count']//500)))
     else:
         continue
 
